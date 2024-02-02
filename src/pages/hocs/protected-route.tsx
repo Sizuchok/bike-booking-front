@@ -15,7 +15,11 @@ const ProtectedRoute = () => {
       {accessToken && user ? (
         <Outlet />
       ) : (
-        <Navigate to={`/${ROUTER.AUTH.INDEX}/${ROUTER.AUTH.SIGN_IN}`} state={{ from: location }} />
+        <Navigate
+          to={`/${ROUTER.AUTH.INDEX}/${ROUTER.AUTH.SIGN_IN}`}
+          state={{ from: location }}
+          replace
+        />
       )}
     </>
   )

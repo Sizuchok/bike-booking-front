@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useShallow } from 'zustand/react/shallow'
 import { API } from '../../common/const/api-keys.const'
 import { ROUTER } from '../../common/const/router-keys.const'
@@ -30,6 +30,8 @@ const SignInForm = () => {
   )
 
   const navigate = useNavigate()
+  const location = useLocation()
+  const to = location.state.from?.pathname ?? `/${ROUTER.DASHBOARD.INDEX}`
 
   const form = useForm<SignIn>({
     resolver: zodResolver(signInSchema),
@@ -51,7 +53,7 @@ const SignInForm = () => {
       setUser(data.user)
       setAccessToken(data.accessToken)
 
-      navigate(`/${ROUTER.DASHBOARD.INDEX}`)
+      navigate(to, { replace: true })
     }
   }, [isSuccess])
 
