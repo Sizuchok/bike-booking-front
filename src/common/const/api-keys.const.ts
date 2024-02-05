@@ -3,6 +3,7 @@ const AUTH = {
   SIGN_UP: 'sign-up',
   SIGN_IN: 'sign-in-jwt',
   REFRESH: 'refresh',
+  SIGN_OUT: 'sign-out',
 } as const
 
 const BIKES = {

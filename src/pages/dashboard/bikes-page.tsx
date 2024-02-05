@@ -1,5 +1,5 @@
+import BikeCard from '../../bikes/components/bike-card'
 import { useAllBikes } from '../../bikes/hooks/all-bikes.hook'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '../../components/ui/resizable'
 
 const BikesPage = () => {
@@ -15,13 +15,7 @@ const BikesPage = () => {
       <ResizablePanel defaultSize={45} maxSize={55} minSize={40}>
         <div className="space-y-2">
           {bikes.map(bike => (
-            <Card key={bike._id}>
-              <CardHeader>
-                <CardTitle>{`${bike.name} - ${bike.type} (${bike.color})`}</CardTitle>
-                <CardDescription>{`ID: ${bike._id}`}</CardDescription>
-              </CardHeader>
-              <CardContent>{`Status: ${bike.status}`}</CardContent>
-            </Card>
+            <BikeCard bike={bike} key={bike._id} />
           ))}
         </div>
       </ResizablePanel>

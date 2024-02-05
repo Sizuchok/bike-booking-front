@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
-import { API } from '../../common/const/api-keys.const'
+import { ROUTER } from '../../common/const/router-keys.const'
 import { Button } from '../../components/ui/button'
 import {
   Form,
@@ -39,7 +39,7 @@ const SignUpForm = () => {
   const { control, handleSubmit } = form
 
   if (isSuccess) {
-    return <Navigate to={`../${API.AUTH.SIGN_IN}`} />
+    return <Navigate to={`../${ROUTER.AUTH.SIGN_IN}`} />
   }
 
   return (
@@ -102,7 +102,7 @@ const SignUpForm = () => {
             {isPending ? <ReloadIcon className="animate-spin" /> : 'Sign up'}
           </Button>
           <Button type="button" disabled={isPending} variant="outline" asChild>
-            <Link to={`../${API.AUTH.SIGN_IN}`}>I have an account</Link>
+            <Link to={`../${ROUTER.AUTH.SIGN_IN}`}>I have an account</Link>
           </Button>
         </div>
       </form>

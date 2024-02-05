@@ -24,4 +24,13 @@ export class HttpService<TResponse = unknown> {
     )
     return response.data
   }
+
+  async patch<OwnResponse = TResponse>(param: string, config: AxiosRequestConfig) {
+    const response = await apiClient.patch<OwnResponse>(
+      `${this.endpoint}/${param}`,
+      config.data,
+      config,
+    )
+    return response.data
+  }
 }

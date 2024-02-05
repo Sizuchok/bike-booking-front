@@ -31,7 +31,7 @@ const SignInForm = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const to = location.state.from?.pathname ?? `/${ROUTER.DASHBOARD.INDEX}`
+  const to = location.state?.from?.pathname ?? `/${ROUTER.DASHBOARD.INDEX}`
 
   const form = useForm<SignIn>({
     resolver: zodResolver(signInSchema),
