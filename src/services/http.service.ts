@@ -33,4 +33,9 @@ export class HttpService<TResponse = unknown> {
     )
     return response.data
   }
+
+  async delete<OwnResponse = unknown>(param: string) {
+    const response = await apiClient.delete<OwnResponse>(`${this.endpoint}/${param}`)
+    return response.data
+  }
 }

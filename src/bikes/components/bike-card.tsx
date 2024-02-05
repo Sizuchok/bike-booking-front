@@ -1,4 +1,4 @@
-import { CaretSortIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, Cross1Icon } from '@radix-ui/react-icons'
 import { CheckIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Bike, BikeAvailability, BikeValueLabel } from '../../bikes/types/bike.types'
@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Command, CommandEmpty, CommandGroup, CommandItem } from '../../components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover'
 import { cn } from '../../lib/utils'
+import { useDeleteBike } from '../hooks/delete-bike.hook'
 import { useUpdateBike } from '../hooks/update-bike.hook'
 
 const statuses: BikeValueLabel[] = [
@@ -22,7 +23,7 @@ const statuses: BikeValueLabel[] = [
     value: 'unavailable',
     label: 'Unavailable',
   },
-]
+] as const
 
 type ColorMap = {
   [key in BikeAvailability]: string
@@ -42,10 +43,15 @@ const BikeCard = ({ bike }: Props) => {
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<BikeAvailability>(bike.status)
 
-  const { mutate } = useUpdateBike(bike._id)
+  const { mutate: updateStatus } = useUpdateBike(bike._id)
+  const { mutate: deleteBike } = useDeleteBike(bike._id)
 
   return (
-    <Card className={CardBorderColorMap[value]}>
+    <Card className={cn(CardBorderColorMap[value], 'relative')}>
+      <Cross1Icon
+        className="absolute right-2 top-2 hover:cursor-pointer hover:scale-105"
+        onClick={() => deleteBike()}
+      />
       <CardHeader>
         <CardTitle>{`${bike.name} - ${bike.type} (${bike.color})`}</CardTitle>
         <CardDescription>{`ID: ${bike._id}`}</CardDescription>
@@ -74,7 +80,7 @@ const BikeCard = ({ bike }: Props) => {
                     key={status.value}
                     value={status.value}
                     onSelect={currentValue => {
-                      mutate({ status: currentValue as BikeAvailability })
+                      updateStatus({ status: currentValue as BikeAvailability })
                       setValue(currentValue as BikeAvailability)
                       setOpen(false)
                     }}

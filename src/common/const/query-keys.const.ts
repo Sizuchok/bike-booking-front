@@ -9,6 +9,7 @@ const BIKES = {
   GET_ALL: 'get-all-bikes',
   CREATE_ONE: 'create-one-bike',
   UPDATE_ONE: 'update-one-bike',
+  DELETE_ONE: 'delete-one-bike',
 } as const
 
 export const QUERY = {
