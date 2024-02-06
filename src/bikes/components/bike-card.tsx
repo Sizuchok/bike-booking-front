@@ -1,29 +1,12 @@
-import { CaretSortIcon, Cross1Icon } from '@radix-ui/react-icons'
-import { CheckIcon } from 'lucide-react'
+import { Cross1Icon } from '@radix-ui/react-icons'
 import { useState } from 'react'
-import { Bike, BikeAvailability, BikeValueLabel } from '../../bikes/types/bike.types'
-import { Button } from '../../components/ui/button'
+import { Bike, BikeAvailability, BikeAvailabilityLabel } from '../../bikes/types/bike.types'
+import ComboBox from '../../common/components/combo-box'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
-import { Command, CommandEmpty, CommandGroup, CommandItem } from '../../components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover'
 import { cn } from '../../lib/utils'
+import { BIKE_STATUSES } from '../consts/bike.consts'
 import { useDeleteBike } from '../hooks/delete-bike.hook'
 import { useUpdateBike } from '../hooks/update-bike.hook'
-
-const statuses: BikeValueLabel[] = [
-  {
-    value: 'available',
-    label: 'Available',
-  },
-  {
-    value: 'busy',
-    label: 'Busy',
-  },
-  {
-    value: 'unavailable',
-    label: 'Unavailable',
-  },
-] as const
 
 type ColorMap = {
   [key in BikeAvailability]: string
@@ -40,11 +23,10 @@ const CardBorderColorMap: ColorMap = {
 } as const
 
 const BikeCard = ({ bike }: Props) => {
-  const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<BikeAvailability>(bike.status)
 
-  const { mutate: updateStatus } = useUpdateBike(bike._id)
   const { mutate: deleteBike } = useDeleteBike(bike._id)
+  const { mutate: updateStatus } = useUpdateBike(bike._id)
 
   return (
     <Card className={cn(CardBorderColorMap[value], 'relative')}>
@@ -53,51 +35,22 @@ const BikeCard = ({ bike }: Props) => {
         onClick={() => deleteBike()}
       />
       <CardHeader>
-        <CardTitle>{`${bike.name} - ${bike.type} (${bike.color})`}</CardTitle>
+        <CardTitle>
+          {bike.name}
+          <span className="font-normal">{` - ${bike.type} (${bike.color})`}</span>
+        </CardTitle>
         <CardDescription>{`ID: ${bike._id}`}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className="w-[200px] justify-between"
-            >
-              {value
-                ? statuses.find(status => status.value === value)?.label
-                : 'Select framework...'}
-              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandEmpty>No framework found.</CommandEmpty>
-              <CommandGroup>
-                {statuses.map(status => (
-                  <CommandItem
-                    key={status.value}
-                    value={status.value}
-                    onSelect={currentValue => {
-                      updateStatus({ status: currentValue as BikeAvailability })
-                      setValue(currentValue as BikeAvailability)
-                      setOpen(false)
-                    }}
-                  >
-                    {status.label}
-                    <CheckIcon
-                      className={cn(
-                        'ml-auto h-4 w-4',
-                        value === status.value ? 'opacity-100' : 'opacity-0',
-                      )}
-                    />
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </Command>
-          </PopoverContent>
-        </Popover>
+      <CardContent className="flex justify-between items-center">
+        <ComboBox<BikeAvailability, BikeAvailabilityLabel>
+          options={BIKE_STATUSES}
+          value={value}
+          onChange={value => {
+            setValue(value)
+            updateStatus({ status: value })
+          }}
+        />
+        <span className="text-xl">{`${bike.price}.00 UAH/hr`}</span>
       </CardContent>
     </Card>
   )

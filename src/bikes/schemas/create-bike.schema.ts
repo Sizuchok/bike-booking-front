@@ -11,8 +11,8 @@ export const createBikeSchema = z
       .max(20),
     type: z.string().min(3).max(20),
     color: z.string().min(3).max(20),
-    wheelSize: z.number().positive(),
-    price: z
+    wheelSize: z.coerce.number().positive(),
+    price: z.coerce
       .number({
         required_error: 'Price is required',
         invalid_type_error: 'Price must be a string',

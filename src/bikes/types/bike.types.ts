@@ -10,5 +10,6 @@ export type CreateBike = z.infer<typeof createBikeSchema>
 export type UpdateBike = z.infer<typeof updateBikeShema>
 
 export type BikeAvailability = CreateBike['status']
+export type BikeAvailabilityLabel = 'Available' | 'Unavailable' | 'Busy'
 
-export type BikeValueLabel = ValueLabel<BikeAvailability, 'Available' | 'Unavailable' | 'Busy'>
+export type BikeValueLabel = ValueLabel<BikeAvailability, BikeAvailabilityLabel>

@@ -1,4 +1,5 @@
 import BikeCard from '../../bikes/components/bike-card'
+import CreateBikeForm from '../../bikes/forms/create-bike-form'
 import { useAllBikes } from '../../bikes/hooks/all-bikes.hook'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '../../components/ui/resizable'
 
@@ -10,7 +11,7 @@ const BikesPage = () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="space-x-2 max-w-[1200px] border border-dashed rounded-xl p-2 mx-auto"
+      className="space-x-2 max-w-[1200px] border border-dashed rounded-xl p-4 mx-auto"
     >
       <ResizablePanel defaultSize={45} maxSize={55} minSize={40}>
         <div className="space-y-2">
@@ -20,7 +21,9 @@ const BikesPage = () => {
         </div>
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={55}>some content here</ResizablePanel>
+      <ResizablePanel defaultSize={55}>
+        <CreateBikeForm />
+      </ResizablePanel>
     </ResizablePanelGroup>
   )
 }
