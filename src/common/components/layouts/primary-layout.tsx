@@ -9,7 +9,7 @@ const PrimaryLayout = () => {
   const { user } = useAuthStore(useShallow(({ user }) => ({ user })))
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex flex-col">
       <div className="h-14 border-b flex items-center px-5 justify-between">
         <div>
           <Link to={`/${ROUTER.DASHBOARD.INDEX}`} className="flex items-center text-lg underline">
@@ -25,7 +25,7 @@ const PrimaryLayout = () => {
         </div>
       </div>
 
-      <div className="px-10 pt-6">
+      <div className="p-4 grow">
         <Outlet />
       </div>
     </div>

@@ -35,17 +35,17 @@ const ComboBox = <Value extends string, Label extends string>({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="min-w-[200px] justify-between"
+          className="w-[200px] justify-between"
           disabled={disabled}
         >
           {options.find(status => status.value === value)?.label ?? 'Choose status...'}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-[200px] w-full p-0">
+      <PopoverContent className="min-w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandInput placeholder="Search..." />
+          <CommandEmpty>Nothing found.</CommandEmpty>
           <CommandGroup>
             {options.map(status => (
               <CommandItem

@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import { useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { Bike, BikeAvailability, BikeAvailabilityLabel } from '../../bikes/types/bike.types'
 import ComboBox from '../../common/components/combo-box'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
@@ -35,6 +36,7 @@ const CardBorderColorMap: ColorMap = {
 
 const BikeCard = ({ bike }: Props) => {
   const [value, setValue] = useState<BikeAvailability>(bike.status)
+  const isMobile = useMediaQuery({ minWidth: 375, maxWidth: 768 })
 
   const { mutate: deleteBike } = useDeleteBike(bike._id)
   const { mutate: updateStatus } = useUpdateBike(bike._id)
@@ -66,7 +68,13 @@ const BikeCard = ({ bike }: Props) => {
         </CardTitle>
         <CardDescription>{`ID: ${bike._id}`}</CardDescription>
       </CardHeader>
-      <CardContent className="flex justify-between items-center">
+      <CardContent
+        className={cn(
+          'flex flex-col gap-2',
+          isMobile ? 'flex-row items-center justify-between' : '',
+          'md:flex-row md:items-center md:justify-between',
+        )}
+      >
         <ComboBox<BikeAvailability, BikeAvailabilityLabel>
           options={BIKE_STATUSES}
           value={value}
@@ -75,7 +83,7 @@ const BikeCard = ({ bike }: Props) => {
             updateStatus({ status: value })
           }}
         />
-        <span className="text-xl">{`${bike.price}.00 UAH/hr`}</span>
+        <span className="text-xl whitespace-nowrap">{`${bike.price}.00 UAH/hr`}</span>
       </CardContent>
     </Card>
   )
