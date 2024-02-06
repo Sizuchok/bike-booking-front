@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import { useState } from 'react'
 import { Bike, BikeAvailability, BikeAvailabilityLabel } from '../../bikes/types/bike.types'
@@ -30,10 +41,24 @@ const BikeCard = ({ bike }: Props) => {
 
   return (
     <Card className={cn(CardBorderColorMap[value], 'relative')}>
-      <Cross1Icon
-        className="absolute right-2 top-2 hover:cursor-pointer hover:scale-105"
-        onClick={() => deleteBike()}
-      />
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Cross1Icon className="absolute right-2 top-2 hover:cursor-pointer hover:scale-105" />
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this bike info from the
+              server.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => deleteBike()}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <CardHeader>
         <CardTitle>
           {bike.name}

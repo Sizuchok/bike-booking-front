@@ -9,10 +9,7 @@ const BikesPage = () => {
   const bikes = data ?? []
 
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="space-x-2 max-w-[1200px] border border-dashed rounded-xl p-4 mx-auto"
-    >
+    <ResizablePanelGroup direction="horizontal" className="space-x-2 max-w-[1200px] p-4 mx-auto">
       <ResizablePanel defaultSize={45} maxSize={55} minSize={40}>
         <div className="space-y-2">
           {bikes.map(bike => (
