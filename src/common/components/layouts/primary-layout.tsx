@@ -25,7 +25,7 @@ const PrimaryLayout = () => {
         </div>
       </div>
 
-      <div className="p-4 grow">
+      <div className="p-4 grow" style={{ height: `calc(100vh - ${56}px)` }}>
         <Outlet />
       </div>
     </div>

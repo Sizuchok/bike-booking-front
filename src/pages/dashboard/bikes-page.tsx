@@ -1,12 +1,13 @@
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'usehooks-ts'
 import BikeCard from '../../bikes/components/bike-card'
 import CreateBikeForm from '../../bikes/forms/create-bike-form'
 import { useAllBikes } from '../../bikes/hooks/all-bikes.hook'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '../../components/ui/resizable'
+import { ScrollArea } from '../../components/ui/scroll-area'
 
 const BikesPage = () => {
   const { data } = useAllBikes()
-  const isTablet = useMediaQuery({ minWidth: 768 })
+  const isTablet = useMediaQuery('(min-width: 768px)')
 
   const bikes = data ?? []
 
@@ -19,11 +20,13 @@ const BikesPage = () => {
   return (
     <ResizablePanelGroup direction={direction} className="max-w-[1200px] mx-auto">
       <ResizablePanel defaultSize={50} {...minMax}>
-        <div className="space-y-2">
-          {bikes.map(bike => (
-            <BikeCard bike={bike} key={bike._id} />
-          ))}
-        </div>
+        <ScrollArea className="h-full">
+          <div className="space-y-2">
+            {bikes.map(bike => (
+              <BikeCard bike={bike} key={bike._id} />
+            ))}
+          </div>
+        </ScrollArea>
       </ResizablePanel>
       <ResizableHandle withHandle className="my-2 md:my-0 md:mx-2" />
       <ResizablePanel defaultSize={50}>

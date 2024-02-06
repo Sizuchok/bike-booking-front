@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import { useState } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'usehooks-ts'
 import { Bike, BikeAvailability, BikeAvailabilityLabel } from '../../bikes/types/bike.types'
 import ComboBox from '../../common/components/combo-box'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
@@ -36,7 +36,7 @@ const CardBorderColorMap: ColorMap = {
 
 const BikeCard = ({ bike }: Props) => {
   const [value, setValue] = useState<BikeAvailability>(bike.status)
-  const isMobile = useMediaQuery({ minWidth: 375, maxWidth: 768 })
+  const isMobile = useMediaQuery('(min-width: 375px) and (max-width: 768px)')
 
   const { mutate: deleteBike } = useDeleteBike(bike._id)
   const { mutate: updateStatus } = useUpdateBike(bike._id)
