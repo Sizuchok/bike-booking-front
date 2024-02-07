@@ -13,3 +13,11 @@ export type BikeAvailability = CreateBike['status']
 export type BikeAvailabilityLabel = 'Available' | 'Unavailable' | 'Busy'
 
 export type BikeValueLabel = ValueLabel<BikeAvailability, BikeAvailabilityLabel>
+
+export type AllBikes = {
+  bikes: Bike[]
+  count: number
+  available: number
+  busy: number
+  avgPrice: number
+}

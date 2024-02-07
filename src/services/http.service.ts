@@ -6,8 +6,8 @@ export class HttpService<TResponse = unknown> {
     this.endpoint = endpoint
   }
 
-  async getAll(config?: AxiosRequestConfig<never>) {
-    const response = await apiClient.get<TResponse[]>(this.endpoint, config)
+  async getAll<OwnResponse = TResponse[]>(config?: AxiosRequestConfig<never>) {
+    const response = await apiClient.get<OwnResponse>(this.endpoint, config)
     return response.data
   }
 
