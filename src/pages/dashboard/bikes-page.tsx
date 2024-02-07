@@ -1,15 +1,16 @@
 import { useMediaQuery } from 'usehooks-ts'
 import BikeCard from '../../bikes/components/bike-card'
+import BikeStatistics from '../../bikes/components/bike-statistics'
 import CreateBikeForm from '../../bikes/forms/create-bike-form'
 import { useAllBikes } from '../../bikes/hooks/all-bikes.hook'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '../../components/ui/resizable'
 import { ScrollArea } from '../../components/ui/scroll-area'
 
 const BikesPage = () => {
-  const { data } = useAllBikes()
+  const { data, isSuccess } = useAllBikes()
   const isTablet = useMediaQuery('(min-width: 768px)')
 
-  const bikes = data ?? []
+  const bikes = data?.bikes ?? []
 
   const direction = isTablet ? 'horizontal' : 'vertical'
   const minMax = {
@@ -30,7 +31,10 @@ const BikesPage = () => {
       </ResizablePanel>
       <ResizableHandle withHandle className="my-2 md:my-0 md:mx-2" />
       <ResizablePanel defaultSize={50}>
-        <CreateBikeForm />
+        <div>
+          <CreateBikeForm />
+          {isSuccess && <BikeStatistics data={data} />}
+        </div>
       </ResizablePanel>
     </ResizablePanelGroup>
   )

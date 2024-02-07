@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
-import { useAuthStore } from '../../auth/store/auth-store'
 import { UpdateIcon } from '@radix-ui/react-icons'
+import { ReactNode } from 'react'
 import { useRefreshToken } from '../../auth/hooks/refresh-token.hook'
+import { useAuthStore } from '../../auth/store/auth-store'
 
 type Props = {
   children: ReactNode
@@ -11,7 +11,8 @@ const Main = ({ children }: Props) => {
   const { data, isFetching, isSuccess } = useRefreshToken()
 
   if (isSuccess) {
-    useAuthStore.setState({ accessToken: data.accessToken, user: data.user })
+    const { accessToken, user } = data
+    useAuthStore.setState({ accessToken, user })
   }
 
   return isFetching ? (
