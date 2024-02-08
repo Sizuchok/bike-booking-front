@@ -1,5 +1,6 @@
 import { useMediaQuery } from 'usehooks-ts'
 import BikeCard from '../../bikes/components/bike-card'
+import BikeCardSkeleton from '../../bikes/components/bike-card-skeleton'
 import BikeStatistics from '../../bikes/components/bike-statistics'
 import CreateBikeForm from '../../bikes/forms/create-bike-form'
 import { useAllBikes } from '../../bikes/hooks/all-bikes.hook'
@@ -7,7 +8,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '../../comp
 import { ScrollArea } from '../../components/ui/scroll-area'
 
 const BikesPage = () => {
-  const { data, isSuccess } = useAllBikes()
+  const { data, isLoading, isFetching } = useAllBikes()
   const isTablet = useMediaQuery('(min-width: 768px)')
 
   const bikes = data?.bikes ?? []
@@ -18,11 +19,15 @@ const BikesPage = () => {
     maxSize: isTablet ? 55 : 100,
   } as const
 
+  const skeletons = new Array(8).fill('')
+
   return (
     <ResizablePanelGroup direction={direction} className="max-w-[1200px] mx-auto">
       <ResizablePanel defaultSize={50} {...minMax}>
         <ScrollArea className="h-full">
           <div className="space-y-2">
+            {isLoading && skeletons.map((_, i) => <BikeCardSkeleton key={i} />)}
+
             {bikes.map(bike => (
               <BikeCard bike={bike} key={bike._id} />
             ))}
@@ -33,7 +38,7 @@ const BikesPage = () => {
       <ResizablePanel defaultSize={50}>
         <div>
           <CreateBikeForm />
-          {isSuccess && <BikeStatistics data={data} />}
+          <BikeStatistics isFetching={isFetching} data={data} />
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>

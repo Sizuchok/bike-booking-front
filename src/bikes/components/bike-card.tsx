@@ -62,7 +62,7 @@ const BikeCard = ({ bike }: Props) => {
         </AlertDialogContent>
       </AlertDialog>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="font-bold">
           {bike.name}
           <span className="font-normal">{` - ${bike.type} (${bike.color})`}</span>
         </CardTitle>
